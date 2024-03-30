@@ -167,8 +167,6 @@ eval "$(pyenv virtualenv-init -)"
 function dotfiles_backup () {
   # bashrc
   cp ~/.bashrc ~/dev/dotfiles/bashrc
-  # vscode
-  cp -r ~/.vscode ~/dev/dotfiles/vscode
   cd ~/dev/dotfiles
   git add . 
   git commit -m 'dotfiles backup'
