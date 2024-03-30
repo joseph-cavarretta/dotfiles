@@ -164,7 +164,8 @@ eval "$(pyenv virtualenv-init -)"
 ###############  FUNCTIONS  #############
 
 
-function dotfiles_backup () {
+function dotbkp () {
+  # copy and push selected dotfiles to github
   # bashrc
   cp ~/.bashrc ~/dev/dotfiles/bashrc
   cd ~/dev/dotfiles
@@ -182,4 +183,3 @@ alias ad-hoc="cd ~/dev/ad-hoc"
 alias dotfiles="cd ~/dev/dotfiles"
 alias gs="git status"
 alias gb="git branch"
-alias dotbkp=$(dotfiles_backup)
