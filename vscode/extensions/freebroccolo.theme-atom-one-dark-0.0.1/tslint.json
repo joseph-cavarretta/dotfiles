@@ -1,8 +1,0 @@
-{
-  "extends": "tslint:latest",
-  "rules": {
-    "curly": false,
-    "max-line-length": [ false ],
-    "no-namespace": false
-  }
-}
