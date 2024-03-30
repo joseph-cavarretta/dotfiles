@@ -146,7 +146,7 @@ function set_bash_prompt () {
 }
 
 # Limit length of path in prompt
-PROMPT_DIRTRIM=3
+PROMPT_DIRTRIM=2
 
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
