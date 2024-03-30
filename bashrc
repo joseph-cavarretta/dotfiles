@@ -161,6 +161,21 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 
+###############  FUNCTIONS  #############
+
+
+function dotfiles_backup () {
+  # bashrc
+  cp ~/.bashrc ~/dev/dotfiles/bashrc
+  # vscode
+  cp ~/.vscode ~/dev/dotfiles/vscode
+  cd ~/dev/dotfiles
+  git add . 
+  git commit -m 'dotfiles backup'
+  git push
+  cd ~
+
+
 ###############  ALIASES  ###############
 
 
@@ -169,5 +184,4 @@ alias ad-hoc="cd ~/dev/ad-hoc"
 alias dotfiles="cd ~/dev/dotfiles"
 alias gs="git status"
 alias gb="git branch"
-alias dotbkp="cp ~/.bashrc ~/dev/dotfiles/bashrc && cd ~/dev/dotfiles && \
-  git add . && git commit -m 'bashrc backup' && git push && cd ~"
+alias dotbkp=$(dotfiles_backup)
