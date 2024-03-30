@@ -166,4 +166,5 @@ alias ad-hoc="cd ~/dev/ad-hoc"
 alias dotfiles="cd ~/dev/dotfiles"
 alias gs="git status"
 alias gb="git branch"
-alias dotbkp="cp ~/.bashrc ~/dev/dotfiles/bashrc && cd ~/dev/dotfiles && git add . && git commit -m 'bashrc backup' && git push"
+alias dotbkp="cp ~/.bashrc ~/dev/dotfiles/bashrc && cd ~/dev/dotfiles && \
+  git add . && git commit -m 'bashrc backup' && git push && cd ~"
