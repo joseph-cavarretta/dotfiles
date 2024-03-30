@@ -166,8 +166,11 @@ eval "$(pyenv virtualenv-init -)"
 
 function dotbkp () {
   # copy and push selected dotfiles to github
-  # bashrc
+  
+  # bash
   cp ~/.bashrc ~/dev/dotfiles/bashrc
+  # vim
+  cp ~/.vimrc ~/dev/dotfiles/vimrc
   cd ~/dev/dotfiles
   git add . 
   git commit -m 'dotfiles backup'
