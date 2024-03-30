@@ -171,6 +171,8 @@ function dotbkp () {
   cp ~/.bashrc ~/dev/dotfiles/bashrc
   # vim
   cp ~/.vimrc ~/dev/dotfiles/vimrc
+  cp -r ~/.vim ~/dev/dotfiles/vim
+
   cd ~/dev/dotfiles
   git add . 
   git commit -m 'dotfiles backup'
