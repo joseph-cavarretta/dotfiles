@@ -174,7 +174,7 @@ function dotfiles_backup () {
   git commit -m 'dotfiles backup'
   git push
   cd ~
-
+}
 
 ###############  ALIASES  ###############
 
