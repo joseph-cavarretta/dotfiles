@@ -145,6 +145,9 @@ function set_bash_prompt () {
   PS1="${GREEN}\A ${YELLOW}\w${PYTHON_VIRTUALENV}${BRANCH} $ "
 }
 
+# Limit length of path in prompt
+PROMPT_DIRTRIM=3
+
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
 
