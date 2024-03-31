@@ -1,0 +1,7 @@
+[user]
+	email = josephmc241@gmail.com
+	name = joseph-cavarretta
+[credential]
+	helper = store
+[init]
+	defaultBranch = main
