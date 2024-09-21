@@ -153,9 +153,38 @@ function dotbkp () {
 
 function newproject () {
   # execute as newproject 'dirname' 'python version'
+  local dirname=$1
+  local python_version=$2
+  
+  # navigate to projects dir
+  cd ~/dev
+
   # create folders
+  mkdir $dirname
+  cd    $dirname
+
+  mkdir 'src'
+  mkdir 'tests'
+  mkdir 'scripts'
+  touch 'README.md'
+  touch 'requirements.txt'
+  
+  # check for .gitignore in templates, otherwise create blank
+  if [ -f ~/dev/templates/.gitignore ]; then
+    cp ~/dev/templates/.gitignore .gitignore
+  else 
+    touch .gitignore
+  fi
+  
   # create virtualenv
+  pyenv virtualenv $dirname-$python_version $python_version
+  pyenv local      $dirname-$python_version
+
   # initialize git
+  git remote add origin git@github.com:joseph-cavarretta/$dirname.git
+  git add .
+  git commit -m "initial commit"
+  git push -u origin master
 }
 
 
