@@ -181,10 +181,11 @@ function newproject () {
   pyenv local      $dirname-$python_version
 
   # initialize git
+  git init -b main --bare
   git remote add origin git@github.com:joseph-cavarretta/$dirname.git
   git add .
   git commit -m "initial commit"
-  git push -u origin master
+  git push origin main
 }
 
 
@@ -213,7 +214,3 @@ alias l='ls -CF'
 # misc aliases
 alias google="google-chrome"
 alias date='date "+%Y-%m-%d %A %T %Z"'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
