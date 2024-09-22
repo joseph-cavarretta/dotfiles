@@ -185,7 +185,7 @@ function newproject () {
   git remote add origin git@github.com:joseph-cavarretta/$dirname.git
   git add .
   git commit -m "initial commit"
-  git push origin main
+  #git push origin main
 }
 
 
@@ -198,6 +198,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # cd aliases
+alias home="cd ~"
 alias dev="cd ~/dev"
 alias ad-hoc="cd ~/dev/ad-hoc"
 alias dotfiles="cd ~/dev/dotfiles"
@@ -214,3 +215,4 @@ alias l='ls -CF'
 # misc aliases
 alias google="google-chrome"
 alias date='date "+%Y-%m-%d %A %T %Z"'
+alias ps="ps auxf"
