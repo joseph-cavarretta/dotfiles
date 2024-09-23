@@ -2,6 +2,6 @@
 	email = josephmc241@gmail.com
 	name = joseph-cavarretta
 [credential]
-	helper = manager-core
+	helper = manager
 [init]
 	defaultBranch = main
