@@ -185,21 +185,21 @@ function newproject () {
   touch 'requirements.txt'
   
   # check for .gitignore in templates, otherwise create blank
-  if [ -f ~/dev/templates/.gitignore ]; then
-    cp ~/dev/templates/.gitignore .gitignore
-  else 
-    touch .gitignore
-  fi
+  #if [ -f ~/dev/templates/.gitignore ]; then
+  #  cp ~/dev/templates/.gitignore .gitignore
+  #else 
+  #  touch .gitignore
+  #fi
   
   # create virtualenv
-  pyenv virtualenv $dirname-$python_version $python_version
+  pyenv virtualenv $python_version $dirname-$python_version
   pyenv local      $dirname-$python_version
 
   # initialize git
-  git init -b main --bare
-  git remote add origin git@github.com:joseph-cavarretta/$dirname.git
-  git add .
-  git commit -m "initial commit"
+  git init
+  git remote add "origin" git@github.com:joseph-cavarretta/text-wrangler.git
+  #git add .
+  #git commit -m "initial commit"
   #git push origin main
 }
 
