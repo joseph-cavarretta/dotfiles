@@ -151,6 +151,20 @@ function dotbkp () {
 }
 
 
+function mkrepo() {
+  $NAME=$1
+  $TOKEN=""
+  curl -L \
+  -X POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/user/repos \
+  -d \'{"name":$NAME, "gitignore_template":"python", "private":true, "is_template":false}\'
+}
+
+
+
 function newproject () {
   # execute as newproject 'dirname' 'python version'
   local dirname=$1
@@ -211,6 +225,14 @@ alias gb="git branch"
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+# chmod aliases
+alias mx='chmod a+x'
+alias 000='chmod -R 000'
+alias 644='chmod -R 644'
+alias 666='chmod -R 666'
+alias 755='chmod -R 755'
+alias 777='chmod -R 777'
 
 # misc aliases
 alias google="google-chrome"
