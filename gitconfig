@@ -3,5 +3,6 @@
 	name = joseph-cavarretta
 [credential]
 	helper = manager
+	credentialStore = plaintext
 [init]
 	defaultBranch = main
