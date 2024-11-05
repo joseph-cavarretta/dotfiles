@@ -4,7 +4,11 @@ case $- in
       *) return;;
 esac
 
-#################### HISTORY SETTINGS ######################################### 
+###############################################################################
+#
+#   HISTORY SETTINGS
+#
+###############################################################################
 
 # Expand the history size
 export HISTFILESIZE=10000
@@ -18,7 +22,11 @@ shopt -s histappend
 PROMPT_COMMAND='history -a'
 
 
-#################### GENERAL SETTINGS #########################################
+###############################################################################
+#
+#   GENERAL SETTINGS
+#
+###############################################################################
 
 
 # check the window size after each command and, if necessary,
@@ -53,7 +61,11 @@ if ! shopt -oq posix; then
 fi
 
 
-####################  PROMPT SETTINGS  ########################################
+###############################################################################
+#
+#   PROMPT SETTINGS
+#
+###############################################################################
 
 
 # The various escape codes that color the prompt.
@@ -110,7 +122,7 @@ function set_bash_prompt () {
   set_git_branch
 
   # Set the bash prompt variable.
-  PS1="${GREEN}\A ${YELLOW}\w${PYTHON_VIRTUALENV}${BRANCH} $ "
+  PS1="\n${GREEN}\A ${YELLOW}\w${PYTHON_VIRTUALENV}${BRANCH} $ "
 }
 
 # Limit length of path in prompt
@@ -120,7 +132,11 @@ PROMPT_DIRTRIM=2
 PROMPT_COMMAND=set_bash_prompt
 
 
-####################  PYENV  ##################################################
+###############################################################################
+#
+#   PYENV
+#
+###############################################################################
 
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -129,7 +145,11 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 
-####################  FUNCTIONS  ##############################################
+###############################################################################
+#
+#   FUNCTIONS
+#
+###############################################################################
 
 
 function dotbkp () {
@@ -204,7 +224,11 @@ function newproject () {
 }
 
 
-####################  ALIASES  ################################################
+###############################################################################
+#
+#   ALIASES
+#
+###############################################################################
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
