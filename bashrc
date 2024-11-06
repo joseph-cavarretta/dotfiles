@@ -217,7 +217,7 @@ function newproject () {
 
   # initialize git
   git init
-  git remote add "origin" git@github.com:joseph-cavarretta/text-wrangler.git
+  git remote add "origin" git@github.com:joseph-cavarretta/$dirname.git
   #git add .
   #git commit -m "initial commit"
   #git push origin main
