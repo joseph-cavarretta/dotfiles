@@ -122,7 +122,7 @@ function set_bash_prompt () {
   set_git_branch
 
   # Set the bash prompt variable.
-  PS1="${GREEN}\A ${YELLOW}\w${PYTHON_VIRTUALENV}${BRANCH} $ "
+  PS1="${GREEN}\A ${YELLOW}\w${PYTHON_VIRTUALENV}${BRANCH} > "
 }
 
 # Limit length of path in prompt
