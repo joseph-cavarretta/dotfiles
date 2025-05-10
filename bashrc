@@ -157,12 +157,20 @@ function dotbkp () {
   
   # bash
   cp ~/.bashrc ~/dev/dotfiles/bashrc
+
   # vim
   cp ~/.vimrc ~/dev/dotfiles/vimrc
   cp -r ~/.vim ~/dev/dotfiles/vim
+
   # git
   cp ~/.gitconfig ~/dev/dotfiles/gitconfig
+  
+  # vscode
+  cp ~/.config/Code/User/settings.json ~/dev/dotfiles/vscode
+  cp ~/.config/Code/User/keybindings.json ~/dev/dotfiles/vscode
+  code --list-extensions > ~/dev/dotfiles/vscode/vscode-extensions.txt
 
+  # push to github
   cd ~/dev/dotfiles
   git add . 
   git commit -m 'dotfiles backup'
