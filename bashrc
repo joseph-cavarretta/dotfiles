@@ -247,12 +247,14 @@ fi
 # cd aliases
 alias home="cd ~"
 alias dev="cd ~/dev"
-alias ad-hoc="cd ~/dev/ad-hoc"
-alias dotfiles="cd ~/dev/dotfiles"
+alias ah="cd ~/dev/ad-hoc"
+alias dot="cd ~/dev/dotfiles"
 
 # git aliases
 alias gs="git status"
 alias gb="git branch"
+alias gco="git checkout"
+alias gcm="git checkout main"
 
 # ls aliases
 alias ll='ls -alF'
