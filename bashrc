@@ -166,8 +166,8 @@ function dotbkp () {
   cp ~/.gitconfig ~/dev/dotfiles/gitconfig
   
   # vscode
-  cp ~/.config/Code/User/settings.json ~/dev/dotfiles/vscode
-  cp ~/.config/Code/User/keybindings.json ~/dev/dotfiles/vscode
+  cp ~/.config/Code/User/settings.json ~/dev/dotfiles/vscode/settings.json
+  cp ~/.config/Code/User/keybindings.json ~/dev/dotfiles/vscode/keybindings.json
   code --list-extensions > ~/dev/dotfiles/vscode/vscode-extensions.txt
 
   # push to github
