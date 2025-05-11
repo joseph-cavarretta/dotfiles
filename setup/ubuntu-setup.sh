@@ -45,6 +45,18 @@ echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" 
 sudo apt update && sudo apt install -y code
 rm microsoft.gpg
 
+echo "🔧  Ensuring 'code' CLI is available in PATH..."
+
+if ! command -v code &>/dev/null; then
+  echo "⚠️   'code' not found in PATH. Adding it manually..."
+
+  # VS Code usually installs here when using the .deb package
+  if [ -d "/usr/share/code/bin" ]; then
+    echo 'export PATH="$PATH:/usr/share/code/bin"' >> ~/.bashrc
+    export PATH="$PATH:/usr/share/code/bin"
+  fi
+fi
+
 echo "🎨  Configuring Atom One Dark theme in VS Code..."
 code --install-extension akamud.vscode-theme-onedark
 code --install-extension ms-python.python
