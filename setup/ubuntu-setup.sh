@@ -189,15 +189,29 @@ fi
 # ───────────────────────────────────────────────────
 # 🌑 One Dark theme for GNOME Terminal via one-gnome-terminal
 # ───────────────────────────────────────────────────
-echo "🌑  Installing One Dark for GNOME Terminal..."
+echo "🎨  Installing/Updating one-gnome-terminal…"
 if [ ! -d "$HOME/.one-gnome-terminal" ]; then
-  git clone https://github.com/denysdovhan/one-gnome-terminal.git "$HOME/.one-gnome-terminal"
+  git clone https://github.com/denysdovhan/one-gnome-terminal.git \
+    "$HOME/.one-gnome-terminal"
 else
-  cd "$HOME/.one-gnome-terminal" && git pull
+  git -C "$HOME/.one-gnome-terminal" pull
 fi
 
-# Run the bundled one-dark.sh script
-bash "$HOME/.one-gnome-terminal/one-dark.sh"
+echo "🎨  Applying One Dark theme…"
+bash "$HOME/.one-gnome-terminal/one-dark.sh" --no-confirm
+
+# grab the current default profile ID
+PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
+
+# make sure this profile stays the default
+gsettings set org.gnome.Terminal.ProfilesList default "'$PROFILE'"
+
+# force 180×40 initial size
+BASE="org.gnome.Terminal.Legacy.Profile:/org/gnome/Terminal/Legacy/Profiles:/:$PROFILE/"
+gsettings set $BASE default-size-columns 180
+gsettings set $BASE default-size-rows    40
+
+echo "🎨  One Dark applied and profile configured (default, 180×40)."
 
 # ────────────────────────────────────────────────
 # 🔧 Touchscreen & Tablet-mode fix
