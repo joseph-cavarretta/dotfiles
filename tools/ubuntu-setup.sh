@@ -156,17 +156,6 @@ fi
 echo "🐍  Installing pyenv + pyenv-virtualenv..."
 if [ ! -d "$HOME/.pyenv" ]; then
   curl https://pyenv.run | bash
-  # ensure .bashrc has the pyenv init block
-  if ! grep -q 'pyenv init' "$HOME/.bashrc"; then
-    cat <<'EOF' >> "$HOME/.bashrc"
-
-# PYENV SETUP
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
-EOF
-  fi
 fi
 
 # ────────────────────────────────────────────────
@@ -196,6 +185,11 @@ if [ -f "$HOME/dev/dotfiles/vscode/vscode-extensions.txt" ]; then
       || echo "⚠️  Failed to install $extension"
   done < "$HOME/dev/dotfiles/vscode/vscode-extensions.txt"
 fi
+
+# ────────────────────────────────────────────────
+# Other Ubuntu programs
+# ──────────────────────────────────────────────── 
+sudo apt install btop
 
 # ────────────────────────────────────────────────
 # Set atom one dark as GNOME terminal theme

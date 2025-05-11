@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/dev  # or your top-level folder
+cd ~/dev
 
 for dir in */; do
   if [ -d "$dir/.git" ]; then
