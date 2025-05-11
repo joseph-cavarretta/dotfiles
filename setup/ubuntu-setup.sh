@@ -57,10 +57,6 @@ if ! command -v code &>/dev/null; then
   fi
 fi
 
-echo "🎨  Configuring Atom One Dark theme in VS Code..."
-code --install-extension akamud.vscode-theme-onedark
-code --install-extension ms-python.python
-
 ### DOCKER DESKTOP
 echo "🐳  Installing Docker Desktop..."
 curl -fsSL https://desktop.docker.com/linux/main/amd64/docker-desktop.deb -o docker-desktop.deb
