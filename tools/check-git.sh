@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd ~/dev  # or your top-level folder
+
+for dir in */; do
+  if [ -d "$dir/.git" ]; then
+    echo "🔍  Checking $dir"
+    cd "$dir"
+
+    if [ -n "$(git status --porcelain)" ]; then
+      echo "⚠️   Changes found in $dir"
+    else
+      echo "✅  Clean"
+    fi
+
+    cd ..
+  fi
+done
+
