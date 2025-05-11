@@ -162,7 +162,6 @@ function dotbkp () {
 
   # vim
   cp ~/.vimrc ~/dev/dotfiles/vimrc
-  rm -rf ~/dev/dotfiles/vim
   cp -r ~/.vim ~/dev/dotfiles/vim
 
   # git
