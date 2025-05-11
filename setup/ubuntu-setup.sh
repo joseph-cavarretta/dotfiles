@@ -156,6 +156,7 @@ fi
 echo "🐍  Installing pyenv + pyenv-virtualenv..."
 if [ ! -d "$HOME/.pyenv" ]; then
   curl https://pyenv.run | bash
+fi
 
 # ────────────────────────────────────────────────
 # 📦 Dotfiles
@@ -168,10 +169,10 @@ else
   cd dotfiles && git pull && cd ..
 fi
 
-echo "🛠️  Applying .bashrc from dotfiles..."
+echo "🛠️  Applying BASH settings from dotfiles..."
 cp -f "$HOME/dev/dotfiles/bashrc" "$HOME/.bashrc"
 
-echo "🛠️  Applying vim settings from dotfiles..."
+echo "🛠️  Applying VIM settings from dotfiles..."
 cp -f "$HOME/dev/dotfiles/vimrc" "$HOME/.vimrc"
 cp -rf "$HOME/dev/dotfiles/vim" "$HOME/.vim"
 
@@ -188,15 +189,15 @@ fi
 # ───────────────────────────────────────────────────
 # 🌑 One Dark theme for GNOME Terminal via one-gnome-terminal
 # ───────────────────────────────────────────────────
-echo "🎨  Installing One Dark for GNOME Terminal..."
+echo "🌑  Installing One Dark for GNOME Terminal..."
 if [ ! -d "$HOME/.one-gnome-terminal" ]; then
   git clone https://github.com/denysdovhan/one-gnome-terminal.git "$HOME/.one-gnome-terminal"
 else
   cd "$HOME/.one-gnome-terminal" && git pull
 fi
 
-# Run the installer (it will prompt you to choose One Dark and target profiles)
-bash "$HOME/.one-gnome-terminal/install.sh"
+# Run the bundled one-dark.sh script
+bash "$HOME/.one-gnome-terminal/one-dark.sh"
 
 # ────────────────────────────────────────────────
 # 🔧 Touchscreen & Tablet-mode fix
