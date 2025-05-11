@@ -155,6 +155,8 @@ eval "$(pyenv virtualenv-init -)"
 function dotbkp () {
   # copy and push selected dotfiles to github
   
+  WORKDIR="$(pwd)"
+
   # bash
   cp ~/.bashrc ~/dev/dotfiles/bashrc
 
@@ -175,7 +177,7 @@ function dotbkp () {
   git add . 
   git commit -m 'dotfiles backup'
   git push
-  cd ~
+  cd $WORKDIR
 }
 
 
