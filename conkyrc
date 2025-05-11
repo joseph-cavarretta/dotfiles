@@ -1,0 +1,60 @@
+conky.config = {
+    background = true,
+    use_xft = true,
+    font = 'Monospace:size=13',
+    xftalpha = 1.0,
+    update_interval = 1.0,
+    total_run_times = 0,
+    own_window = true,
+    own_window_type = 'desktop',
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    double_buffer = true,
+    minimum_width = 300, minimum_height = 300,
+    maximum_width = 300,
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = true,
+    default_color = '#ABB2BF',
+    color1 = '#61AFEF',
+    color2 = '#98C379',
+    color3 = '#E5C07B',
+    color4 = '#C678DD',
+    color5 = '#56B6C2',
+    color6 = '#E06C75',
+    alignment = 'top_right',
+    gap_x = 20,
+    gap_y = 40,
+    no_buffers = true,
+    uppercase = false,
+    cpu_avg_samples = 2,
+    net_avg_samples = 2,
+    override_utf8_locale = true,
+    use_spacer = 'none',
+    own_window_colour = '#282C34',
+};
+
+conky.text = [[
+${color1}${time %A}, ${time %B %d %Y}
+${color1}${time %H:%M:%S}${color}
+
+${color2}CPU:${color} ${cpu}% ${cpubar 8,180}
+${color2}Temp:${color} ${exec sensors | grep 'Package id 0:' | awk '{print $4}'}
+${color2}Load:${color} ${loadavg}
+
+${color3}Memory:${color} $mem / $memmax ${membar 8,180}
+${color3}Swap:  ${color} $swap / $swapmax ${swapbar 8,180}
+
+${color5}Disk Root:${color} ${fs_used /} / ${fs_size /} ${fs_bar 8,180 /}
+${color5}Disk Home:${color} ${fs_used /home} / ${fs_size /home} ${fs_bar 8,180 /home}
+
+${color6}Uptime:${color} $uptime
+${color6}Battery:${color} ${battery_percent BAT0}% ${battery_bar 8,180 BAT0}
+
+${color4}Down:${color} ${downspeed enp3s0} KB/s ${downspeedgraph enp3s0 20,140}
+${color4}Up:  ${color} ${upspeed enp3s0} KB/s ${upspeedgraph enp3s0 20,140}
+]];
+
