@@ -1,8 +1,7 @@
 [user]
-	email = josephmc241@gmail.com
 	name = joseph-cavarretta
-[credential]
-	helper = manager
-	credentialStore = plaintext
+	email = josephmc241@gmail.com
 [init]
 	defaultBranch = main
+[push]
+	autoSetupRemote = true
