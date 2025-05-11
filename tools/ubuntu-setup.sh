@@ -186,10 +186,27 @@ if [ -f "$HOME/dev/dotfiles/vscode/vscode-extensions.txt" ]; then
   done < "$HOME/dev/dotfiles/vscode/vscode-extensions.txt"
 fi
 
+echo "🛠️  Applying Conky settings from dotfiles..."
+cp -f "$HOME/dev/dotfiles/conkyrc" "$HOME/.conkyrc"
+
 # ────────────────────────────────────────────────
 # Other Ubuntu programs
 # ──────────────────────────────────────────────── 
+# btop
 sudo apt install btop
+# conky
+sudo apt install conky-all
+# conky autostart
+mkdir -p ~/.config/autostart
+cat <<EOF > ~/.config/autostart/conky.desktop
+[Desktop Entry]
+Type=Application
+Exec=conky
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Conky
+EOF
 
 # ────────────────────────────────────────────────
 # Set atom one dark as GNOME terminal theme
