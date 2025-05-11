@@ -100,6 +100,10 @@ if [ -f ~/dev/dotfiles/vscode-extensions.txt ]; then
   done < ~/dev/dotfiles/vscode-extensions.txt
 fi
 
+### DISABLE TOUCHSCREEN
+echo "🔧  Running touchscreen/tablet mode fix..."
+chmod +x ./disable-touchscreen.sh
+./disable-touchscreen.sh
 
 ### SYSTEM CLEANUP
 echo "🧹  Removing unnecessary packages..."
