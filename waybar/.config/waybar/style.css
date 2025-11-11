@@ -1,0 +1,105 @@
+/* Atom One Dark inspired Waybar */
+
+/* Global */
+* {
+  font-family: monospace;
+  font-size: 13px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Bar background */
+window#waybar {
+  background: #21252b;            /* Dark, subtle */
+  color: #abb2bf;
+  border-bottom: 1px solid #181a1f;
+}
+
+/* =========================
+   Workspaces - pill style
+   ========================= */
+
+#workspaces {
+  margin-left: 8px;
+}
+
+#workspaces button {
+  padding: 2px 10px;
+  margin: 0 3px;
+  background: transparent;
+  color: #5c6370;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+#workspaces button.active {
+  background: #282c34;
+  color: #61afef;                                      /* One Dark cyan */
+  border-color: rgba(97, 175, 239, 0.9);
+  box-shadow: 0 0 8px rgba(97, 175, 239, 0.35);
+}
+
+#workspaces button:hover {
+  background: #2c313a;
+  color: #abb2bf;
+  border-color: rgba(97, 175, 239, 0.4);
+}
+
+/* =========================
+   Right-side modules - tiles
+   ========================= */
+
+#cpu,
+#memory,
+#network,
+#clock {
+  /* inner padding inside the pill */
+  padding: 4px 10px 4px;
+
+  /* margin: top right/left bottom */
+  margin: 5px 4px 5px;
+
+  min-height: 22px;
+
+  background: #282c34;
+  border-radius: 999px;
+  border: 1px solid rgba(40, 44, 52, 0.0);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+
+  transition: all 0.15s ease;
+}
+
+/* Per-module accent colors */
+
+#cpu {
+  color: #61afef;                                    /* cyan */
+  border-color: rgba(97, 175, 239, 0.6);
+}
+
+#memory {
+  color: #c678dd;                                    /* purple */
+  border-color: rgba(198, 120, 221, 0.6);
+}
+
+#network {
+  color: #98c379;                                    /* green */
+  border-color: rgba(152, 195, 121, 0.6);
+}
+
+#clock {
+  color: #e5cfff;                                    /* soft sakura-ish */
+  border-color: rgba(224, 108, 117, 0.7);
+}
+
+/* Hover glow */
+
+#cpu:hover,
+#memory:hover,
+#network:hover,
+#clock:hover {
+  background: #2f343f;
+  box-shadow: 0 0 10px rgba(97, 175, 239, 0.35);
+}
+

@@ -1,0 +1,37 @@
+* {
+  font-family: monospace;
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+/* Transparent so only the pill shows */
+window#waybar {
+  background: transparent;
+  color: #e5cfff;
+}
+
+/* Sakura / One Dark pill */
+#clock {
+  padding: 8px 18px;
+  margin: 0;
+
+  background: rgba(33, 37, 43, 0.92);                 /* dark base */
+  color: #e5cfff;                                     /* soft pink/lilac */
+
+  border-radius: 20px;
+  border: 1px solid rgba(224, 108, 117, 0.7);         /* sakura border */
+  box-shadow: 0 0 14px rgba(224, 108, 117, 0.26);
+
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+
+  transition: background 0.16s ease, box-shadow 0.16s ease;
+}
+
+#clock:hover {
+  background: rgba(33, 37, 43, 0.98);
+  box-shadow: 0 0 18px rgba(224, 108, 117, 0.38);
+}
+

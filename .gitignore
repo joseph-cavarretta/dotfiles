@@ -1,0 +1,5 @@
+.zsh_history
+*.swp
+*.swo
+.DS_Store
+.cache/

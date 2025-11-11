@@ -1,0 +1,84 @@
+#! /usr/bin/env zsh
+
+
+# ------------------------------------------------------------
+# PYENV
+
+autoload -Uz vcs_info add-zsh-hook
+
+_vcs_info_precmd() {
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    vcs_info        # populates $vcs_info_msg_0_
+  else
+    vcs_info_msg_0_=''  # clear when not in a repo
+  fi
+}
+
+# Run before each prompt
+add-zsh-hook precmd _vcs_info_precmd
+
+# ------------------------------------------------------------
+# DOCKER
+
+docker_clean() {
+  if ! command -v docker >/dev/null 2>&1; then
+    echo "docker_clean: docker not found on PATH, nothing to do."
+    return 0
+  fi
+
+  # warn if DOCKER_HOST is pointing at a remote daemon
+  if [[ -n "$DOCKER_HOST" ]]; then
+    echo "docker_clean: DOCKER_HOST is set to '$DOCKER_HOST'"
+    echo "This likely targets a NON-local Docker daemon."
+    read -q "reply?Are you sure you want to run a FULL cleanup there? [y/N] "
+    echo
+    if [[ ! "$reply" == [Yy] ]]; then
+      echo "docker_clean: Aborted (remote Docker detected)."
+      return 1
+    fi
+  fi
+
+  # quick summary of what will be affected
+  local containers images volumes networks
+  containers=$(docker ps -aq 2>/dev/null | wc -l | tr -d ' ')
+  images=$(docker images -q 2>/dev/null | sort -u | wc -l | tr -d ' ')
+  volumes=$(docker volume ls -q 2>/dev/null | wc -l | tr -d ' ')
+  networks=$(docker network ls -q 2>/dev/null | wc -l | tr -d ' ')
+
+  echo "docker_clean will run: docker system prune -a --volumes"
+  echo "This will attempt to remove:"
+  echo "  • All stopped containers        ($containers)"
+  echo "  • All unused images             ($images)"
+  echo "  • All unused networks           ($networks)"
+  echo "  • All unused volumes            ($volumes)"
+  echo "  • Build cache"
+  echo
+  read -q "reply?Proceed with FULL Docker cleanup on this host? [y/N] "
+  echo
+  if [[ ! "$reply" == [Yy] ]]; then
+    echo "docker_clean: Aborted by user."
+    return 1
+  fi
+
+  # perform the cleanup
+  docker system prune -a --volumes
+
+  # optionally clean Docker Desktop VMs, but only if they exist and user confirms
+  local dd_vm_dir="$HOME/.docker/desktop/vms"
+  if [[ -d "$dd_vm_dir" ]]; then
+    echo
+    echo "Detected Docker Desktop VMs at: $dd_vm_dir"
+    echo "Removing this will force Docker Desktop to recreate its VM environment."
+    read -q "reply?Also remove Docker Desktop VMs directory? [y/N] "
+    echo
+    if [[ "$reply" == [Yy] ]]; then
+      rm -rf -- "$dd_vm_dir"
+      echo "docker_clean: Removed Docker Desktop VMs directory."
+    else
+      echo "docker_clean: Left Docker Desktop VMs directory intact."
+    fi
+  fi
+
+  echo "docker_clean: Done."
+}
+

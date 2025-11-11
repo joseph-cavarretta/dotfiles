@@ -1,0 +1,22 @@
+{
+  "layer": "top",
+  "position": "top",
+  "exclusive": false,
+  "height": 52,
+
+  "margin-top": 40,
+  "margin-right": 40,
+  "margin-left": 0,
+
+  "modules-left": [],
+  "modules-center": [],
+  "modules-right": ["clock"],
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M}",
+    "format-alt": "{:%a %b %d · %H:%M}",
+    "tooltip": false
+  }
+}
+

@@ -1,0 +1,7 @@
+[user]
+	name = joseph-cavarretta
+	email = josephmc241@gmail.com
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
