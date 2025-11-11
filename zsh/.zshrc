@@ -1,11 +1,18 @@
 #!/usr/bin/env zsh
 
+# ------------------------------------------------------------
 # COLORS
+
 export COLORTERM=truecolor
 
+
+# ------------------------------------------------------------
 # SOURCES
+
 [ -f ~/.zsh_functions ] && source ~/.zsh_functions
 
+
+# ------------------------------------------------------------
 # HISTORY OPTIONS
 
 # write history file in :start:elapsed;command format
@@ -32,14 +39,21 @@ setopt HIST_IGNORE_SPACE
 # do not execute immediately upon history expansion
 setopt HIST_VERIFY
 
+
+# ------------------------------------------------------------
 # AUTOCOMPLETE
 
 autoload -Uz compinit
 compinit
 
+
+# ------------------------------------------------------------
 # Makefile
+
 zstyle ':completion:*:*:make:*' tag-order 'targets'
 
+
+# ------------------------------------------------------------
 # PYENV
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -49,30 +63,32 @@ fi
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
-  if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
-    eval "$(pyenv virtualenv-init -)"
-  fi
+  eval "$(pyenv virtualenv-init -)"
 fi
 
+
+# ------------------------------------------------------------
 # PROMPT
 
 # Add colors to Terminal (atom one dark theme)
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
+# Tell pyenv not to hijack the prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=yes
+
 # Load version control to prompt
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '%b '
 autoload -Uz vcs_info
 
-# Edit virtual env to prompt
-export VIRTUAL_ENV_DISABLE_PROMPT=yes
-
 setopt PROMPT_SUBST
 
 # Build prompt
-PROMPT=$'%F{green}%* %f%F{blue}%~ %f%(1V.(%1v) .)%F{red}${vcs_info_msg_0_}%f\n> '
+PROMPT=$'%F{green}%* %f%F{blue}%~ %f$(virtualenv_info)%F{red}${vcs_info_msg_0_}%f\n> '
 
+
+# ------------------------------------------------------------
 # ALIASES
 
 # dir aliases

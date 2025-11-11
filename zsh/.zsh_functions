@@ -1,21 +1,23 @@
 #! /usr/bin/env zsh
 
-
-# ------------------------------------------------------------
-# PYENV
-
 autoload -Uz vcs_info add-zsh-hook
 
 _vcs_info_precmd() {
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    vcs_info        # populates $vcs_info_msg_0_
+    vcs_info
   else
-    vcs_info_msg_0_=''  # clear when not in a repo
+    vcs_info_msg_0_=''
   fi
 }
 
-# Run before each prompt
 add-zsh-hook precmd _vcs_info_precmd
+
+virtualenv_info() {
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    printf '(%s) ' "${VIRTUAL_ENV:t}"
+  fi
+}
+
 
 # ------------------------------------------------------------
 # DOCKER
