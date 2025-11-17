@@ -5,3 +5,8 @@
 	defaultBranch = main
 [push]
 	autoSetupRemote = true
+[http]
+	version = HTTP/1.1
+	sslBackend = openssl
+[core]
+	editor = vim

@@ -1,29 +1,47 @@
 let g:onedark_termcolors=16
 colorscheme onedark
 
-" Enable syntax highlighting
+" enable syntax highlighting
 syntax on
 
-" Show line numbers
+" vundle
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'majutsushi/tagbar'
+
+call vundle#end()
+
+filetype plugin indent on
+autocmd FileType c call tagbar#autoopen(0)
+
+set laststatus=2
+" set statusline=%!FugitiveStatusLine()
+
+" show line numbers
 set number
 
-" Highlight current line
+" highlight current line
 set cursorline
 
-" Show matching brackets instantly
+" show matching brackets instantly
 set showmatch
 
-" Better command-line completion
+" better command-line completion
 set wildmenu
 
-" Show partial commands in the last line as you type
+" show partial commands in the last line as you type
 set showcmd
 
-" Case-insensitive search unless capital letters are used
+" case-insensitive search unless capital letters are used
 set ignorecase
 set smartcase
 
-" Incremental search: highlight as you type
+" incremental search: highlight as you type
 " set incsearch
 " set hlsearch
 
