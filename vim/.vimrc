@@ -13,14 +13,23 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 
 filetype plugin indent on
-autocmd FileType c call tagbar#autoopen(0)
+
+augroup my_tagbar_autoopen
+  autocmd!
+  autocmd FileType c,python call tagbar#autoopen(0)
+augroup END
+
 
 set laststatus=2
-" set statusline=%!FugitiveStatusLine()
+set statusline=%!FugitiveStatusline()
+
+" make tagbar wider
+let g:tagbar_width = 80
 
 " show line numbers
 set number
