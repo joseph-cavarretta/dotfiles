@@ -237,11 +237,63 @@ local plugins = {
                 local node = state.tree:get_node()
                 local path = node:get_id()
 
+                -- guardrails: refuse obviously dangerous paths
+                local function is_forbidden(p)
+                  local forbidden = {
+                    "/",
+                    vim.loop.os_homedir(),
+                    vim.fn.getcwd(),
+                    ".git",
+                    ".svn",
+                    "node_modules",
+                  }
+                  for _, f in ipairs(forbidden) do
+                    if p == f or p:match("^" .. vim.pesc(f) .. "/") then
+                      return true
+                    end
+                  end
+                  return false
+                end
+                if is_forbidden(path) then
+                  vim.notify("Refusing to delete a protected path: " .. path, vim.log.levels.ERROR)
+                  return
+                end
+
+                -- choose a trash command per-OS
+                local trash_cmd
+                if vim.fn.has("macunix") == 1 and vim.fn.executable("trash") == 1 then
+                  trash_cmd = { "trash", path }           -- macOS: brew install trash
+                elseif vim.fn.executable("trash-put") == 1 then
+                  trash_cmd = { "trash-put", path }       -- Linux: pacman -S trash-cli
+                elseif vim.fn.executable("gio") == 1 then
+                  trash_cmd = { "gio", "trash", path }    -- Linux with gio
+                end
+
+                local function hard_delete()
+                  inputs.confirm("Permanently delete?\n" .. path, function(yes)
+                    if not yes then return end
+                    local ok = os.remove(path)
+                    if not ok then
+                      vim.fn.delete(path, "rf")           -- directory fallback
+                    end
+                    require("neo-tree.sources.manager").refresh(state.name)
+                  end)
+                end
+
                 inputs.confirm("Move ".. path .. " to Trash?", function(confirmed)
                   if not confirmed then return end
-                  -- requires macos trash cli installed (brew install trash)
-                  vim.fn.system({ "trash", path })
-                  require("neo-tree.sources.manager").refresh(state.name)
+                  if trash_cmd then
+                    local out = vim.fn.system(trash_cmd)  -- argv form, no shell
+                    if vim.v.shell_error ~= 0 then
+                      vim.notify("Trash failed:\n" .. out, vim.log.levels.WARN)
+                      hard_delete()
+                      return
+                    end
+                    require("neo-tree.sources.manager").refresh(state.name)
+                  else
+                    vim.notify("No trash command found (install 'trash' on macOS or 'trash-cli'/'gio' on Linux).", vim.log.levels.WARN)
+                    hard_delete()
+                  end
                 end)
               end,
             },
@@ -391,5 +443,4 @@ local opts = {}
 -- SETUP
 
 require("lazy").setup(plugins, opts)
-
 
