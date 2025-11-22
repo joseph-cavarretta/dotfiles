@@ -9,7 +9,15 @@ export COLORTERM=truecolor
 # ------------------------------------------------------------
 # SOURCES
 
-[ -f ~/.zsh_functions ] && source ~/.zsh_functions
+[ -f "$HOME/.zsh_functions" ] && source "$HOME/.zsh_functions"
+
+
+# ------------------------------------------------------------
+# LOCAL SECRETS (not tracked in git)
+
+if [[ -f "$HOME/.zsh_secrets" ]]; then
+  source "$HOME/.zsh_secrets"
+fi
 
 
 # ------------------------------------------------------------
@@ -115,6 +123,7 @@ alias pip-clear="pip freeze | xargs pip uninstall -y"
 # misc aliases
 alias cl="clear"
 alias ps="ps aux"
+alias psmem='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 15'
 alias ports="sudo lsof -i -P -n"
 alias listen="sudo lsof -i -P -n | grep LISTEN"
 
