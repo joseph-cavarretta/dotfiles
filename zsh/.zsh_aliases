@@ -28,3 +28,4 @@ alias ps="ps aux"
 alias psmem='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 15'
 alias ports="sudo lsof -i -P -n"
 alias listen="sudo lsof -i -P -n | grep LISTEN"
+alias snip="grim -g "$(slurp)" - | wl-copy"
