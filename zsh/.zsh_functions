@@ -84,3 +84,25 @@ docker_clean() {
   echo "docker_clean: Done."
 }
 
+
+# ------------------------------------------------------------
+# BLUETOOTH HEADPHONES
+
+BT_HEADPHONES_MAC="F4:38:17:EC:DE:87"
+
+# connect headphones
+bt_on() {
+  echo "Connecting to headphones ($BT_HEADPHONES_MAC)..."
+  bluetoothctl connect "$BT_HEADPHONES_MAC"
+}
+
+# disconnect headphones
+bt_off() {
+  echo "Disconnecting headphones ($BT_HEADPHONES_MAC)..."
+  bluetoothctl disconnect "$BT_HEADPHONES_MAC"
+}
+
+# quick status
+bt_status() {
+  bluetoothctl info "$BT_HEADPHONES_MAC"
+}

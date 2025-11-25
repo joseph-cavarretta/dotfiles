@@ -10,6 +10,7 @@ export COLORTERM=truecolor
 # SOURCES
 
 [ -f "$HOME/.zsh_functions" ] && source "$HOME/.zsh_functions"
+[ -f "$HOME/.zsh_aliases" ] && source "$HOME/.zsh_aliases"
 
 
 # ------------------------------------------------------------
@@ -96,34 +97,5 @@ setopt PROMPT_SUBST
 PROMPT=$'%F{green}%* %f%F{blue}%~ %f$(virtualenv_info)%F{red}${vcs_info_msg_0_}%f\n> '
 
 
-# ------------------------------------------------------------
-# ALIASES
-
-# dir aliases
-alias home="cd ~"
-alias dev="cd ~/dev"
-alias ah="cd ~/dev/adhoc"
-alias dot="cd ~/dev/dotfiles"
-
-# git aliases
-alias gs="git status"
-alias gb="git branch"
-alias ga="git add"
-alias gco="git checkout"
-alias gp="git pull"
-
-# ls aliases
-alias ll="ls -alF"
-alias la="ls -A"
-alias l="ls -CF"
-
-# python aliases
-alias pip-clear="pip freeze | xargs pip uninstall -y"
-
-# misc aliases
-alias cl="clear"
-alias ps="ps aux"
-alias psmem='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 15'
-alias ports="sudo lsof -i -P -n"
-alias listen="sudo lsof -i -P -n | grep LISTEN"
-
+# Created by `pipx` on 2025-11-22 22:03:14
+export PATH="$PATH:/home/joseph/.local/bin"

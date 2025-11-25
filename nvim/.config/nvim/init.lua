@@ -343,6 +343,15 @@ local plugins = {
   {
     "neovim/nvim-lspconfig",
     config = function()
+      -- GLOBAL DIAGNOSTIC BEHAVIOR
+      vim.diagnostic.config({
+        virtual_text = false,      -- no inline text
+        underline = false,         -- no underlines
+        signs = true,              -- keep gutter signs (set to false to kill these too)
+        update_in_insert = false,  -- dont spam while typing
+        severity_sort = true,      -- sort diagnostics by severity
+      })
+
       local lspconfig = require("lspconfig")
 
       -- generic on_attach for keymaps
