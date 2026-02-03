@@ -27,6 +27,7 @@
 - Types: feat, fix, docs, refactor, test, chore
 - Keep subject line under 50 characters
 - Use imperative mood ("add feature" not "added feature")
+- Do not include Co-Authored-By lines
 
 ## Repository Structure
 Root-level files:
