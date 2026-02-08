@@ -37,6 +37,19 @@
 - Subject line under 50 characters, imperative mood
 - MUST NOT include Co-Authored-By lines
 
+## Pull Requests
+- MUST use the following template when drafting a PR:
+
+```
+### Summary
+
+<summary of changes, succinct and direct.>
+
+### Context
+
+<context for why we made the change, and how it solves the issue.>
+```
+
 ## Documentation
 - NEVER create or modify README.md unless explicitly asked
 - NEVER add docstrings or comments to code you didn't change
