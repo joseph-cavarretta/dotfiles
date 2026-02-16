@@ -34,8 +34,11 @@
 ## Git Commits
 - Format: type(scope): description
 - Types: feat, fix, docs, refactor, test, chore
-- Subject line under 50 characters, imperative mood
+- Subject line MUST be under 50 characters, imperative mood
+- NEVER add a commit body — subject line only
+- Keep it short: e.g., `fix(sis): nil-safe KEDA template`
 - MUST NOT include Co-Authored-By lines
+- NEVER attempt to merge a PR
 
 ## Pull Requests
 - MUST use the following template when drafting a PR:
