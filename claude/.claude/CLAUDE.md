@@ -4,19 +4,19 @@
 - All projects live under ~/dev/
 - Package manager: uv (NEVER use pip or pip install)
 - Python version management: pyenv
-- Containers: Docker / docker compose
+- Shell: zsh, macOS (Darwin)
 
-## Workflow
+## Code
 - MUST read relevant code before proposing changes
 - MUST plan before executing non-trivial tasks (use plan mode)
 - Keep changes focused and minimal — solve the current problem
 - When uncertain, ask rather than guess
 - NEVER over-engineer or add features beyond what was requested
-
-## Code Style (Python)
-- Use pathlib for file paths, NEVER os.path
-- Define and validate interfaces with Pydantic models
-- Use Protocols for dependency injection where applicable
+- NEVER create or modify README.md unless explicitly asked
+- NEVER add docstrings or comments to code you didn't change
+- Only comment where logic isn't self-evident
+- Python: define and validate interfaces with Pydantic models
+- Python: use Protocols for dependency injection where applicable
 
 ## Infrastructure (Terraform / Kubernetes / Helm)
 - Terraform: always run `terraform fmt` and `terraform validate` before considering changes complete
@@ -34,9 +34,8 @@
 ## Git Commits
 - Format: type(scope): description
 - Types: feat, fix, docs, refactor, test, chore
-- Subject line MUST be under 50 characters, imperative mood
-- NEVER add a commit body — subject line only
-- Keep it short: e.g., `fix(sis): nil-safe KEDA template`
+- Subject: under 50 chars, imperative mood, e.g. `fix(sis): nil-safe KEDA template`
+- Body: none
 - MUST NOT include Co-Authored-By lines
 - NEVER attempt to merge a PR
 
@@ -52,8 +51,3 @@
 
 <context for why we made the change, and how it solves the issue.>
 ```
-
-## Documentation
-- NEVER create or modify README.md unless explicitly asked
-- NEVER add docstrings or comments to code you didn't change
-- Only comment where logic isn't self-evident
