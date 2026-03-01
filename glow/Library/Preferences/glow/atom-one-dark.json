@@ -1,0 +1,119 @@
+{
+  "document": {
+    "block_prefix": "",
+    "block_suffix": "",
+    "margin": 0
+  },
+  "block_quote": {
+    "color": "#5C6370",
+    "indent": 2,
+    "indent_token": "│ "
+  },
+  "paragraph": {},
+  "list": {
+    "level_indent": 2
+  },
+  "heading": {
+    "block_suffix": "",
+    "bold": true,
+    "color": "#E5C07B"
+  },
+  "h1": {
+    "prefix": "# ",
+    "bold": true,
+    "color": "#E06C75"
+  },
+  "h2": {
+    "prefix": "## ",
+    "bold": true,
+    "color": "#E06C75"
+  },
+  "h3": {
+    "prefix": "### ",
+    "bold": true,
+    "color": "#E06C75"
+  },
+  "h4": {
+    "prefix": "#### ",
+    "bold": true,
+    "color": "#E5C07B"
+  },
+  "h5": {
+    "prefix": "##### ",
+    "bold": true,
+    "color": "#E5C07B"
+  },
+  "h6": {
+    "prefix": "###### ",
+    "bold": true,
+    "color": "#E5C07B"
+  },
+  "text": {},
+  "strikethrough": {
+    "crossed_out": true
+  },
+  "emph": {
+    "italic": true,
+    "color": "#C678DD"
+  },
+  "strong": {
+    "bold": true,
+    "color": "#E5C07B"
+  },
+  "hr": {
+    "color": "#3E4451",
+    "format": "─"
+  },
+  "item": {
+    "block_prefix": "• "
+  },
+  "enumeration": {
+    "block_prefix": ". "
+  },
+  "task": {
+    "ticked": "☑ ",
+    "unticked": "☐ "
+  },
+  "link": {
+    "color": "#61AFEF",
+    "underline": true
+  },
+  "link_text": {
+    "color": "#C678DD",
+    "bold": true
+  },
+  "image": {
+    "color": "#61AFEF",
+    "underline": true
+  },
+  "image_text": {
+    "color": "#C678DD"
+  },
+  "code": {
+    "color": "#98C379",
+    "background_color": "#282c34"
+  },
+  "code_block": {
+    "color": "#ABB2BF",
+    "background_color": "#282c34",
+    "margin": 1,
+    "chroma": {
+      "theme": "onedark"
+    }
+  },
+  "table": {
+    "center_separator": "┼",
+    "column_separator": "│",
+    "row_separator": "─"
+  },
+  "definition_list": {},
+  "definition_term": {
+    "bold": true,
+    "color": "#61AFEF"
+  },
+  "definition_description": {
+    "block_prefix": "  "
+  },
+  "html_block": {},
+  "html_span": {}
+}
