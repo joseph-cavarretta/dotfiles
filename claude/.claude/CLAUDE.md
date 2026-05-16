@@ -25,6 +25,13 @@
 - Helm: follow Helm chart best practices for templates (helpers in _helpers.tpl, values documented in values.yaml)
 - MUST NOT include secrets, credentials, or sensitive values in any IaC files
 
+## Wiki
+A persistent context wiki lives at `~/.vault/`. Its schema is defined in `~/.vault/CLAUDE.md`.
+- At the start of a session on a known project, read `~/.vault/wiki/projects/<project-name>.md` to orient before exploring the repo
+- When introduced to a new project, scan it and create a wiki page following the schema
+- After significant structural changes to a project, update its wiki page
+- When asked to "check the wiki" or "update the wiki", follow the operations defined in `~/.vault/CLAUDE.md`
+
 ## Testing
 - Framework: pytest
 - Add tests after implementation is working
