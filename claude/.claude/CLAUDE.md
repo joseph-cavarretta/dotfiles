@@ -4,7 +4,7 @@
 - All projects live under ~/dev/
 - Package manager: uv (NEVER use pip or pip install)
 - Python version management: pyenv
-- Shell: zsh, macOS (Darwin)
+- Shell: zsh, Linux
 
 ## Code
 - MUST read relevant code before proposing changes
@@ -15,8 +15,9 @@
 - NEVER create or modify README.md unless explicitly asked
 - NEVER add docstrings or comments to code you didn't change
 - Only comment where logic isn't self-evident
-- Python: define and validate interfaces with Pydantic models
-- Python: use Protocols for dependency injection where applicable
+
+## Style Guide
+@~/.vault/wiki/patterns/python-style.md
 
 ## Infrastructure (Terraform / Kubernetes / Helm)
 - Terraform: always run `terraform fmt` and `terraform validate` before considering changes complete
