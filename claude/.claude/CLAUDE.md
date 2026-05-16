@@ -34,7 +34,7 @@
 ## Git Commits
 - Format: type(scope): description
 - Types: feat, fix, docs, refactor, test, chore
-- Subject: under 50 chars, imperative mood, e.g. `fix(sis): nil-safe KEDA template`
+- Subject: under 50 chars, imperative mood, e.g. `fix(service): nil-safe template`
 - Body: none
 - MUST NOT include Co-Authored-By lines
 - NEVER attempt to merge a PR
