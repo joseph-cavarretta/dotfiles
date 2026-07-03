@@ -1,4 +1,4 @@
-#! /usr/bin/env zsh
+#!/usr/bin/env zsh
 
 autoload -Uz vcs_info add-zsh-hook
 
@@ -90,19 +90,18 @@ docker_clean() {
 
 BT_HEADPHONES_MAC="F4:38:17:EC:DE:87"
 
-# connect headphones
-bt_on() {
-  echo "Connecting to headphones ($BT_HEADPHONES_MAC)..."
-  bluetoothctl connect "$BT_HEADPHONES_MAC"
-}
-
-# disconnect headphones
-bt_off() {
-  echo "Disconnecting headphones ($BT_HEADPHONES_MAC)..."
-  bluetoothctl disconnect "$BT_HEADPHONES_MAC"
-}
-
-# quick status
-bt_status() {
-  bluetoothctl info "$BT_HEADPHONES_MAC"
-}
+if [[ "$OSTYPE" == linux* ]]; then
+  # Linux: BlueZ
+  bt_on()     { echo "Connecting to headphones ($BT_HEADPHONES_MAC)...";    bluetoothctl connect "$BT_HEADPHONES_MAC"; }
+  bt_off()    { echo "Disconnecting headphones ($BT_HEADPHONES_MAC)..."; bluetoothctl disconnect "$BT_HEADPHONES_MAC"; }
+  bt_status() { bluetoothctl info "$BT_HEADPHONES_MAC"; }
+elif [[ "$OSTYPE" == darwin* ]] && command -v blueutil >/dev/null 2>&1; then
+  # macOS: blueutil (brew install blueutil)
+  bt_on()     { echo "Connecting to headphones ($BT_HEADPHONES_MAC)...";    blueutil --connect "$BT_HEADPHONES_MAC"; }
+  bt_off()    { echo "Disconnecting headphones ($BT_HEADPHONES_MAC)..."; blueutil --disconnect "$BT_HEADPHONES_MAC"; }
+  bt_status() { blueutil --info "$BT_HEADPHONES_MAC"; }
+else
+  bt_on()     { echo "bt_on: bluetooth control unavailable (install bluetoothctl on Linux / blueutil on macOS)."; }
+  bt_off()    { bt_on; }
+  bt_status() { bt_on; }
+fi
