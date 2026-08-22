@@ -21,6 +21,8 @@ Without strict guardrails:
 
 These guidelines are not aspirational. They are the minimum standard for code entering a repo.
 
+**The bar is: if code doesn't meet these guidelines, it doesn't merge.** Every line in a change should be code you understand and would stand behind. AI tools are pointed at this document, but reviewers are the last line of defense.
+
 ---
 
 ## How This Document Is Enforced
@@ -212,9 +214,23 @@ url = os.environ["API_URL"]
 class AppConfig(BaseSettings):
     model_config = SettingsConfigDict(extra="forbid")
 
-    notifications_enabled: bool = Field(default=False, validation_alias="IS_ENABLED")
-    api_url: str = Field(validation_alias="API_URL")
+    notifications_enabled: bool = Field(
+        default=False,
+        description="Send notifications when an order is archived.",
+    )
+    api_url: str = Field(description="Base URL for the orders API.")
 ```
+
+`case_sensitive=False` is the default, so `NOTIFICATIONS_ENABLED` already maps to
+`notifications_enabled` without help. Reach for `validation_alias` only when an existing
+env var differs from the field name by more than casing:
+
+```python
+    backend_url: str = Field(validation_alias="CORE_BACKEND_URL")
+```
+
+Give every field a `description`. It is the only documentation a setting gets, and it
+shows up wherever the config is introspected.
 
 **Config propagation:** `get_settings()` is called **once at the entry point** (app lifespan, CLI main, worker startup, script). Everything below the entry point receives the config object as an explicit, required constructor parameter.
 
@@ -332,6 +348,8 @@ config.py      -> BaseSettings + app configuration
 This is one illustration, not a mandated tree. Libraries, CLIs, services, and Prefect projects each shape it differently, and the project scaffold pins the concrete layout per project type. What must hold everywhere: the dependency arrows point one way, and pure logic sits at the bottom with no upward or outward imports.
 
 A shared utility layer (e.g. `shared/`) may be imported by anything, but must never import from a specific feature or service.
+
+Peers at the same level do not import each other either. Two services, two features, two plugins — if one needs something from the other, that something belongs in the shared layer. A direct peer import couples two things that were meant to be replaceable independently.
 
 If you find yourself adding a lazy import to dodge a circular dependency, the layering is wrong — fix the structure.
 
