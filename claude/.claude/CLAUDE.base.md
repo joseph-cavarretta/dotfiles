@@ -49,6 +49,7 @@ imports this file with `@CLAUDE.base.md` and then adds its own machine-specific 
 
 ## MCP Restrictions
 - Treat Notion as read-only — never use Notion write/delete tools
+- `agy` runs with permissions auto-approved and can write anywhere under `~/dev` and `~/.vault`. Scope every delegation to the narrowest `working_directory` that works, and never delegate anything touching secrets or IaC
 
 ## Knowledge Base (Vault)
 
@@ -73,7 +74,7 @@ these instructions simply no-op.
 - Operational incident → check `investigations/` before diagnosing
 
 ### After substantive work
-1. Update or create wiki pages for findings
+1. Update or create wiki pages for findings — new pages and substantial rewrites go through `delegate_vault_document`; write the `INDEX.md` and `log.md` lines yourself
 2. Update `~/.vault/INDEX.md` to reflect new/changed pages
 3. Append to `wiki/log.md` (`YYYY-MM-DD | ACTION | page | description`)
 4. Lint on demand using the checklist in `~/.vault/schema.md`
@@ -85,3 +86,14 @@ these instructions simply no-op.
 - Prefer updating existing pages over creating new ones
 - Staleness marker: add `*(stale, YYYY-MM-DD)*` if a page is 60+ days old
 - Convert relative dates to absolute when writing notes
+
+## Delegating to Antigravity (`agy`)
+- Claude orchestrates and reviews; `agy` does the bulk writing. Server: `~/dev/antigravity-mcp` (see `wiki/repos/antigravity-mcp`).
+- **Delegate** whole-file or multi-file work, roughly 150 lines or more:
+  - `delegate_vault_document` — new vault pages and substantial rewrites
+  - `delegate_code_draft` — test suites, boilerplate, initial implementations
+  - `delegate_task` — summarizing large logs, sweeping several repos
+- **Don't delegate** anything smaller than the review it triggers: one-line `INDEX.md` or `wiki/log.md` entries, small diffs, anything under **Infrastructure**, or anything needing a real permission decision. Reviewing a draft costs a full read, so small delegations cost more than doing the work.
+- Pass **file paths, not file contents** — `agy` reads files itself.
+- To correct a draft, call `refine_delegation` with the returned `conversation_id`. `agy` still holds its context, so a correction is far cheaper than rewriting the draft yourself. Then re-read only to verify.
+- Never accept output unread. Each tool returns its own review checklist — follow it. Code isn't done until `pytest` passes.
