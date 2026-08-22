@@ -1,0 +1,115 @@
+# Shared ruff baseline. Repos extend this rather than copying it:
+#
+#     # pyproject.toml
+#     [tool.ruff]
+#     extend = "../dotfiles/python-styleguide/ruff-base.toml"
+#
+# Every rule here backs a written rule in python-styleguide.md. Do not add rules
+# that the guide does not state, and do not relax rules here to make one repo pass
+# -- override in that repo instead.
+
+line-length = 88
+indent-width = 4
+target-version = "py311"
+
+# Scratch work. Not linted, not formatted.
+extend-exclude = [".local"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+
+[lint]
+# One-off operational tools. Loose rules, but still formatted.
+exclude = ["scripts"]
+
+select = [
+    "F",      # pyflakes
+    "E", "W", # pycodestyle -- W505 (prose width) needs max-doc-length below
+    "I",      # import sorting
+    "N",      # pep8-naming
+    "UP",     # pyupgrade: builtin generics, collections.abc, X | Y
+    "ANN",    # missing annotations
+    "S",      # bandit -- S101 catches assert outside tests
+    "B",      # bugbear -- B006 mutable defaults, B904 raise-from
+    "A",      # builtin shadowing
+    "C4",     # comprehensions
+    "DTZ",    # naive datetimes
+    "ERA",    # commented-out code
+    "G",      # logging: no f-strings in log calls
+    "LOG",    # logging misuse
+    "PIE",
+    "PT",     # pytest style
+    "PTH",    # pathlib over os.path
+    "RET",    # return simplification
+    "SIM",    # simplification
+    "SLF",    # private member access
+    "TC",     # typing-only imports -> TYPE_CHECKING
+    "TID",    # TID252 relative imports
+    "ARG",    # unused arguments
+    "ASYNC",  # blocking calls in async context
+    "C90",    # mccabe complexity
+    "PL",     # pylint: argument count, statement count, branches
+    "RUF",
+    # pydocstyle, curated. No `convention` is set on purpose: convention = "google"
+    # demands Args:/Returns: sections, which the guide forbids.
+    "D101", "D102", "D103",          # class/method/function docstring required
+    "D200", "D201", "D202", "D205",  # shape of the docstring itself
+    "D209", "D210", "D211", "D212",
+    "D300", "D400", "D403", "D415",
+    "D419",
+]
+
+ignore = [
+    "E501",  # code width belongs to the formatter; W505 covers prose
+]
+
+# D100/D104/D107 are deliberately not selected: no module docstrings unless the
+# purpose is non-obvious, no package docstrings, no __init__ docstrings.
+# D203/D213 are the losing halves of pydocstyle's two internal conflicts.
+
+[lint.per-file-ignores]
+# assert is correct in tests; tests are exempt from the docstring rule only.
+"**/tests/**" = ["S101", "D1"]
+"**/test_*.py" = ["S101", "D1"]
+"**/conftest.py" = ["S101", "D1"]
+
+[lint.pycodestyle]
+# Activates W505 for docstrings and comments, which the formatter never reflows.
+max-doc-length = 88
+
+[lint.pydocstyle]
+# No convention. See the note in `select`.
+
+[lint.flake8-tidy-imports]
+# Default is "parents", which still permits `from . import x`. The guide bans all
+# relative imports, so this must be "all".
+ban-relative-imports = "all"
+
+[lint.flake8-type-checking]
+# Without this, TC003 fires on imports used only in Pydantic field annotations
+# (in any file with `from __future__ import annotations`). Ruff gates the fix as
+# unsafe so it will not rewrite the file on its own -- but obeying the warning by
+# hand raises PydanticUserError: "`Order` is not fully defined" at import time.
+# Verified: with this setting the same file is clean.
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
+    "pydantic_settings.BaseSettings",
+]
+
+[lint.isort]
+# Each repo must set its own first-party packages:
+#     [tool.ruff.lint.isort]
+#     known-first-party = ["shared", "content_search"]
+required-imports = []
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.pylint]
+max-args = 6
+max-statements = 50
+max-branches = 12
