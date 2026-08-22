@@ -79,7 +79,9 @@
       "Grep(~/dev/**)",
       "Read(~/.vault/**)",
       "Glob(~/.vault/**)",
-      "Grep(~/.vault/**)"
+      "Grep(~/.vault/**)",
+      "Bash(agy *)",
+      "mcp__antigravity__*"
     ],
     "deny": [
       "Bash(pip install *)",
