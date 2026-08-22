@@ -24,7 +24,9 @@ docstring-code-format = true
 
 [lint]
 # One-off operational tools. Loose rules, but still formatted.
-exclude = ["scripts"]
+# Must be the full glob: [lint].exclude does NOT do basename matching, so bare
+# "scripts" and "scripts/**" both miss nested dirs like services/x/scripts/.
+exclude = ["**/scripts/**"]
 
 select = [
     "F",      # pyflakes

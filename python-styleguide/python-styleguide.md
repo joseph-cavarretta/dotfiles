@@ -127,13 +127,17 @@ The reason for all of this is reviewer cognitive load. An LLM will write four pa
 **`scripts/` and `.local/` are not linted at all.** Both are loose by design. `scripts/` holds one-off operational tools where the module docstring *is* the usage text someone reads before running it, so usage blocks, argument lists, and sample invocations are supposed to be long. `.local/` is scratch work that was never meant to meet production rules. Neither directory is subject to the caps above, the width limit, or any other lint rule.
 
 ```toml
-exclude = [".local/**"]      # scratch: not linted, not formatted
+extend-exclude = [".local"]         # scratch: not linted, not formatted
 
 [lint]
-exclude = ["scripts/**"]     # loose rules, but still formatted
+exclude = ["**/scripts/**"]         # loose rules, but still formatted
 ```
 
 The two settings are not the same. A top-level `exclude` skips linting *and* formatting; `[lint].exclude` skips linting only. `scripts/` still gets formatted, because formatting carries no judgment and keeps diffs readable. `.local/` is left alone completely.
+
+The two settings also match paths differently. A top-level `exclude` matches a bare
+directory name at any depth; `[lint].exclude` does not, so it needs the full
+`**/scripts/**` glob or it silently misses nested directories.
 
 Ruff does not skip dot-directories on its own. `.local/` is exempt only because it is named here — it also gets skipped when gitignored, which is not something to depend on.
 
