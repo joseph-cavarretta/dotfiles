@@ -103,8 +103,11 @@ def iter_py(roots: list[str]) -> Iterator[Path]:
     """Yield .py files under each root, skipping loose and generated dirs."""
     for root in roots:
         base = Path(root)
-        if base.is_file() and base.suffix == ".py":
-            yield base
+        if base.is_file():
+            # Explicit paths must honour the skip list too: callers pass file lists
+            # from git, which happily includes loose directories.
+            if base.suffix == ".py" and not any(p in SKIP_DIRS for p in base.parts):
+                yield base
             continue
         for found in base.rglob("*.py"):
             if not any(part in SKIP_DIRS for part in found.parts):
