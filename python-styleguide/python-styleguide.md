@@ -332,30 +332,93 @@ config: AppConfig
 
 ---
 
-## 8. Separation of Concerns
+## 8. Project Structure
 
-**Keep business logic separate from infrastructure and orchestration.** Business logic should be testable without spinning up infra, and infra concerns (retry, caching, state, I/O) should stay out of business logic.
+**Keep business logic separate from infrastructure and orchestration.** Business logic
+should be testable without spinning up infra, and infra concerns (retry, caching, state,
+I/O) should stay out of business logic.
 
 Two rules carry most of the weight:
 
-1. **Pure logic knows nothing about its callers or its I/O.** No framework imports, no network/disk/database calls inside functions that compute or decide. Those functions take data in and return data out.
-2. **Imports point one direction — toward pure logic.** Entry points and adapters depend on business logic; business logic never depends on them.
+1. **Pure logic knows nothing about its callers or its I/O.** No framework imports, no
+   network/disk/database calls inside functions that compute or decide. Those functions
+   take data in and return data out.
+2. **Imports point one direction — toward pure logic.** Everything above depends on what
+   sits below it; nothing below knows anything above it exists.
+
+### The default layout
+
+Use this tree. It is the default so that layout stops being a decision, and so two
+projects written a year apart look the same.
 
 ```
-entrypoints/   -> app/CLI/worker wiring, calls into services   (may import everything below)
-adapters/      -> I/O: HTTP clients, DB, storage, queues       (imports core + models)
-core/          -> pure business logic                          (imports models only)
-models.py      -> data contracts (Pydantic)
-config.py      -> BaseSettings + app configuration
+src/<package>/
+  __init__.py
+  models.py       data contracts (Pydantic). Imports nothing from the package.
+  config.py       BaseSettings. Imports models.
+  errors.py       exception hierarchy. Imports nothing.
+  core/           pure logic. No I/O, no framework, no clock, no randomness.
+  infra/          everything impure: clients, storage, queues, framework glue.
+  app/            orchestration. One module per use case.
+  entrypoints/    how the process starts: CLI main, ASGI app, worker, flow.
+tests/            mirrors the package tree
+scripts/          one-off operational tools. Loose — not linted (see §2).
 ```
 
-This is one illustration, not a mandated tree. Libraries, CLIs, services, and Prefect projects each shape it differently, and the project scaffold pins the concrete layout per project type. What must hold everywhere: the dependency arrows point one way, and pure logic sits at the bottom with no upward or outward imports.
+Arrows run one way:
 
-A shared utility layer (e.g. `shared/`) may be imported by anything, but must never import from a specific feature or service.
+```
+entrypoints/ -> app/ -> infra/ -> core/ -> models.py, config.py, errors.py
+```
 
-Peers at the same level do not import each other either. Two services, two features, two plugins — if one needs something from the other, that something belongs in the shared layer. A direct peer import couples two things that were meant to be replaceable independently.
+**The line that matters is `infra/`.** Above it you may touch the world. Below it you
+may not.
 
-If you find yourself adding a lazy import to dodge a circular dependency, the layering is wrong — fix the structure.
+- `core/` is the part worth protecting. A function here takes data and returns data. If
+  it needs the time, the network, a database, or a random number, that arrives as an
+  argument. This is what makes it testable without infrastructure (§12).
+- `infra/` holds everything that exists because the outside world does — HTTP clients,
+  database repositories, storage, queue producers — **and** everything that exists
+  because a framework demands it: a Prefect `@task`, a Celery task, a FastAPI
+  dependency, a Click decorator. None of that code has domain meaning. It wraps
+  something that does.
+- `app/` sequences `infra/` and `core/` into one module per use case. It decides order,
+  not policy.
+- `entrypoints/` is wiring only: read config once (§4), construct what is needed, hand
+  off to `app/`. No logic lives here.
+
+Subdivide `infra/` when it earns it rather than up front — `infra/clients/`,
+`infra/storage/`, `infra/tasks/`.
+
+### Permitted variations
+
+These are the deviations that need no justification:
+
+- **A library** is `models.py`, `errors.py`, and `core/`. No `app/`, no `entrypoints/`.
+  If it grows I/O, that goes in `infra/`.
+- **A CLI or small service** may fold `app/` into `entrypoints/` while there is exactly
+  one use case. Split it the moment there are two.
+- **A framework-shaped project** keeps the framework's names where the framework
+  requires them. A Prefect service reads `libs/ -> core/`, `tasks/ -> infra/`,
+  `flows/ -> app/`. Different words, identical arrows.
+- **A single-file tool** is a single file in `scripts/`. Do not build a package around
+  eighty lines.
+
+Anything beyond these is a deviation, and a deviation gets one sentence in the repo's
+own styleguide saying what it is and why.
+
+### Across units
+
+A shared utility layer (e.g. `shared/`) may be imported by anything, but must never
+import from a specific feature or service.
+
+Peers at the same level do not import each other either. Two services, two features, two
+plugins — if one needs something from the other, that something belongs in the shared
+layer. A direct peer import couples two things that were meant to be replaceable
+independently.
+
+If you find yourself adding a lazy import to dodge a circular dependency, the layering is
+wrong — fix the structure.
 
 ---
 
@@ -461,6 +524,8 @@ This is one of the most common AI failure modes. Asked to replace something, the
 | `dict[str, Any]` as a function return type      | Named Pydantic model                              |
 | Mutable module-level state                      | Constants, or a documented process-lifetime cache |
 | Business logic in orchestration/I/O layers      | Logic in pure functions; adapters delegate to it  |
+| Logic in `entrypoints/` or `app/`               | Move it to `core/`                                |
+| A `core/` module importing a client or framework | Pass the data in; the call belongs in `infra/`    |
 | Manual retry loops with `time.sleep`            | Framework retries or `tenacity`                   |
 | Silent `except Exception: pass`                 | Named exceptions + logging (or document why)      |
 | Bare `except:`                                  | Catch the exception you can actually handle       |
