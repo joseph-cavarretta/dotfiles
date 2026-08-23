@@ -38,11 +38,38 @@ make zsh
 per-OS paths) on both platforms, and additionally installs `hypr`/`waybar`/`conky` on Linux.
 Each target runs `stow -t $HOME -R <package>`, so re-running is idempotent.
 
-Bootstrap a fresh knowledge base from the vault scaffold (never overwrites an existing one):
+## Shared assets
+
+Two directories are consumed in place rather than symlinked into `$HOME`. `make all` skips both.
+
+### `vault/`
+
+Scaffold for a knowledge base. Bootstrap a fresh one — never overwrites an existing `~/.vault`:
 
 ```bash
 make vault-init   # copies vault/ -> ~/.vault
 ```
+
+### `python-styleguide/`
+
+Python standards shared across repos, referenced by path instead of copied:
+
+- **`python-styleguide.md`** — the guide itself. Point AI tooling and reviewers at it.
+- **`ruff-base.toml`** — shared lint and format baseline. Extend it from a repo's `pyproject.toml`
+  rather than copying it, and relax rules in the consuming repo:
+
+  ```toml
+  [tool.ruff]
+  extend = "../dotfiles/python-styleguide/ruff-base.toml"
+  ```
+
+- **`docstring_length.py`** — standalone checker for docstrings that sprawl, covering what ruff's
+  `D` rules don't. Exits 1 on a hard cap:
+
+  ```bash
+  python docstring_length.py --stats PATH...   # distribution, for calibration
+  python docstring_length.py PATH...           # check
+  ```
 
 ## Runtime dependencies
 
@@ -53,6 +80,7 @@ Configs assume these tools are present (install per platform):
   (`wl-clipboard`/`xclip` on Linux; built-in on macOS). LSP servers install via Mason.
 - **vim** — plugins are submodules; run `git submodule update --init --recursive` after cloning.
 - **glow** — theme is resolved via `GLAMOUR_STYLE` (set in `.zshenv`).
+- **python-styleguide** — `ruff` for the shared baseline; `docstring_length.py` is stdlib-only.
 - **macOS bluetooth helpers** (`bt_on`/`bt_off`/`bt_status`) — `brew install blueutil`.
 - **VSCode extensions** — restore with
   `xargs -n1 code --install-extension < vscode/vscode-extensions.txt`.
