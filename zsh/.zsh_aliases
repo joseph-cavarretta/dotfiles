@@ -14,7 +14,7 @@ alias ga="git add"
 alias gco="git checkout"
 alias gp="git pull"
 
-# ls aliases
+# ls aliases (base 'ls' color is set per-OS in .zshrc)
 alias ll="ls -alF"
 alias la="ls -A"
 alias l="ls -CF"
@@ -25,9 +25,20 @@ alias pip-clear="pip freeze | xargs pip uninstall -y"
 # misc aliases
 alias cl="clear"
 alias ps="ps aux"
-alias psmem='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 15'
 alias ports="sudo lsof -i -P -n"
 alias listen="sudo lsof -i -P -n | grep LISTEN"
 
+# top processes by memory. 'command ps' avoids re-expanding the 'ps'='ps aux' alias;
+# GNU (Linux) and BSD (macOS) ps take different flags for the same result.
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias psmem="command ps -A -o pid,ppid,comm,%mem,%cpu -m | head -n 15"
+else
+  alias psmem="command ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 15"
+fi
+
 # obsidian aliases
-alias ob="open -a Obsidian"
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias ob="open -a Obsidian"
+else
+  alias ob="obsidian"
+fi
