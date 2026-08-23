@@ -4,9 +4,9 @@ STOW := stow -t $(HOME) -R -d $(CURDIR)
 # Packages stowed on every platform
 COMMON := zsh vim nvim tmux kitty git
 
-.PHONY: all common linux $(COMMON) claude glow vscode hypr waybar conky vault-init
+.PHONY: all common linux $(COMMON) claude glow vscode hypr waybar conky vault-init antigravity-mcp
 
-all: common claude glow vscode
+all: common claude glow vscode antigravity-mcp
 ifeq ($(OS),Linux)
 all: linux
 endif
@@ -46,6 +46,13 @@ else
 	@mkdir -p "$(HOME)/.config/Code/User"
 	@ln -sf "$(CURDIR)/vscode/settings.json" "$(HOME)/.config/Code/User/settings.json"
 endif
+
+# antigravity-mcp: a uv project rather than stow-shaped config, so symlink it into ~/dev,
+# where the mcpServers.antigravity entry in ~/.claude.json expects to find it.
+# Run `uv sync` inside it once after linking.
+antigravity-mcp:
+	@mkdir -p "$(HOME)/dev"
+	@ln -sfn "$(CURDIR)/antigravity-mcp" "$(HOME)/dev/antigravity-mcp"
 
 # Bootstrap a fresh knowledge base from the vault/ scaffold. Never overwrites an existing vault.
 vault-init:
