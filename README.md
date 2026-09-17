@@ -12,7 +12,6 @@ Personal configuration files, managed as [GNU Stow](https://www.gnu.org/software
 | `tmux` | Terminal multiplexer | both |
 | `kitty` | Terminal emulator | both |
 | `git` | Git config | both |
-| `claude` | Claude Code base config (`CLAUDE.base.md`), settings, hooks | both |
 | `glow` | Markdown viewer theme | both |
 | `vscode` | Editor settings and extensions list | both |
 | `hypr` | Hyprland window manager | Linux |
@@ -38,38 +37,11 @@ make zsh
 per-OS paths) on both platforms, and additionally installs `hypr`/`waybar`/`conky` on Linux.
 Each target runs `stow -t $HOME -R <package>`, so re-running is idempotent.
 
-## Shared assets
+## AI agent setup
 
-Two directories are consumed in place rather than symlinked into `$HOME`. `make all` skips both.
-
-### `vault/`
-
-Scaffold for a knowledge base. Bootstrap a fresh one — never overwrites an existing `~/.vault`:
-
-```bash
-make vault-init   # copies vault/ -> ~/.vault
-```
-
-### `python-styleguide/`
-
-Python standards shared across repos, referenced by path instead of copied:
-
-- **`python-styleguide.md`** — the guide itself. Point AI tooling and reviewers at it.
-- **`ruff-base.toml`** — shared lint and format baseline. Extend it from a repo's `pyproject.toml`
-  rather than copying it, and relax rules in the consuming repo:
-
-  ```toml
-  [tool.ruff]
-  extend = "../dotfiles/python-styleguide/ruff-base.toml"
-  ```
-
-- **`docstring_length.py`** — standalone checker for docstrings that sprawl, covering what ruff's
-  `D` rules don't. Exits 1 on a hard cap:
-
-  ```bash
-  python docstring_length.py --stats PATH...   # distribution, for calibration
-  python docstring_length.py PATH...           # check
-  ```
+Claude Code instructions, permissions, guardrail hooks, the Python style guide, the vault scaffold,
+and the delegation MCP server live in [agent-dev-harness](https://github.com/joseph-cavarretta/agent-dev-harness).
+`make all` runs `make harness`, which clones it into `~/dev/agent-dev-harness` and runs its installer.
 
 ## Runtime dependencies
 
@@ -80,7 +52,7 @@ Configs assume these tools are present (install per platform):
   (`wl-clipboard`/`xclip` on Linux; built-in on macOS). LSP servers install via Mason.
 - **vim** — plugins are submodules; run `git submodule update --init --recursive` after cloning.
 - **glow** — theme is resolved via `GLAMOUR_STYLE` (set in `.zshenv`).
-- **python-styleguide** — `ruff` for the shared baseline; `docstring_length.py` is stdlib-only.
+- **harness** — `jq` and `uv` (see the agent-dev-harness README).
 - **macOS bluetooth helpers** (`bt_on`/`bt_off`/`bt_status`) — `brew install blueutil`.
 - **VSCode extensions** — restore with
   `xargs -n1 code --install-extension < vscode/vscode-extensions.txt`.
