@@ -47,12 +47,17 @@ else
 	@ln -sf "$(CURDIR)/vscode/settings.json" "$(HOME)/.config/Code/User/settings.json"
 endif
 
-# antigravity-mcp: a uv project rather than stow-shaped config, so symlink it into ~/dev,
-# where the mcpServers.antigravity entry in ~/.claude.json expects to find it.
-# Run `uv sync` inside it once after linking.
+# antigravity-mcp lives in its own repo; clone it into ~/dev, where the mcpServers.antigravity
+# entry in ~/.claude.json expects to find it. A leftover symlink from when it lived in this repo
+# is replaced. Run `uv sync` inside it once after cloning.
 antigravity-mcp:
 	@mkdir -p "$(HOME)/dev"
-	@ln -sfn "$(CURDIR)/antigravity-mcp" "$(HOME)/dev/antigravity-mcp"
+	@if [ -L "$(HOME)/dev/antigravity-mcp" ]; then rm "$(HOME)/dev/antigravity-mcp"; fi
+	@if [ -d "$(HOME)/dev/antigravity-mcp" ]; then \
+		echo "~/dev/antigravity-mcp already exists — not cloning"; \
+	else \
+		git clone git@github.com:joseph-cavarretta/antigravity-mcp.git "$(HOME)/dev/antigravity-mcp"; \
+	fi
 
 # Bootstrap a fresh knowledge base from the vault/ scaffold. Never overwrites an existing vault.
 vault-init:
