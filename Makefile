@@ -4,9 +4,9 @@ STOW := stow -t $(HOME) -R -d $(CURDIR)
 # Packages stowed on every platform
 COMMON := zsh vim nvim tmux kitty git
 
-.PHONY: all common linux $(COMMON) claude glow vscode hypr waybar conky vault-init antigravity-mcp
+.PHONY: all common linux $(COMMON) glow vscode hypr waybar conky harness
 
-all: common claude glow vscode antigravity-mcp
+all: common glow vscode harness
 ifeq ($(OS),Linux)
 all: linux
 endif
@@ -15,10 +15,6 @@ common: $(COMMON)
 
 $(COMMON):
 	$(STOW) $@
-
-# claude uses --no-folding so real local files (settings.json, CLAUDE.md) can coexist
-claude:
-	$(STOW) --no-folding claude
 
 # Linux-only desktop packages
 linux: hypr waybar conky
@@ -47,22 +43,13 @@ else
 	@ln -sf "$(CURDIR)/vscode/settings.json" "$(HOME)/.config/Code/User/settings.json"
 endif
 
-# antigravity-mcp lives in its own repo; clone it into ~/dev, where the mcpServers.antigravity
-# entry in ~/.claude.json expects to find it. A leftover symlink from when it lived in this repo
-# is replaced. Run `uv sync` inside it once after cloning.
-antigravity-mcp:
+# Claude Code instructions, settings, hooks, style guide, and the delegation MCP server live in
+# agent-dev-harness. Clone it into ~/dev (replacing a leftover antigravity-mcp symlink from when the
+# server lived here) and run its installer.
+harness:
 	@mkdir -p "$(HOME)/dev"
 	@if [ -L "$(HOME)/dev/antigravity-mcp" ]; then rm "$(HOME)/dev/antigravity-mcp"; fi
-	@if [ -d "$(HOME)/dev/antigravity-mcp" ]; then \
-		echo "~/dev/antigravity-mcp already exists — not cloning"; \
-	else \
-		git clone git@github.com:joseph-cavarretta/antigravity-mcp.git "$(HOME)/dev/antigravity-mcp"; \
+	@if [ ! -d "$(HOME)/dev/agent-dev-harness" ]; then \
+		git clone git@github.com:joseph-cavarretta/agent-dev-harness.git "$(HOME)/dev/agent-dev-harness"; \
 	fi
-
-# Bootstrap a fresh knowledge base from the vault/ scaffold. Never overwrites an existing vault.
-vault-init:
-	@if [ -e $(HOME)/.vault ]; then \
-		echo "~/.vault already exists — not overwriting"; \
-	else \
-		cp -r $(CURDIR)/vault $(HOME)/.vault && echo "bootstrapped ~/.vault from scaffold"; \
-	fi
+	$(MAKE) -C "$(HOME)/dev/agent-dev-harness" install
