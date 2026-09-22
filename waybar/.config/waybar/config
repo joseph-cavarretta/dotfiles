@@ -23,10 +23,13 @@
   },
 
   "network": {
+    "interface": "wlp3s0",
     "interval": 3,
-    "format-wifi": "WiFi {essid}",
+    "format-wifi": "WiFi {essid} {signalStrength}%",
     "format-ethernet": "Eth {ifname}",
-    "format-disconnected": "No net"
+    "format-disconnected": "No net",
+    "tooltip-format-wifi": "{essid}\n{ipaddr}/{cidr}\n{frequency} MHz  {signalStrength}%",
+    "tooltip-format-disconnected": "wifi disconnected"
   },
 
   "clock": {
