@@ -42,3 +42,12 @@ if [[ "$OSTYPE" == darwin* ]]; then
 else
   alias ob="obsidian"
 fi
+
+# hyprland
+alias hp="start-hyprland"
+
+# thurnar files-viewer
+alias files="thunar"
+
+# system update
+alias sysup="yay -Syu"
