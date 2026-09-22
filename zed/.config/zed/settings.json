@@ -1,0 +1,90 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "markdown_preview_font_size": 14.0,
+  "buffer_font_weight": 500.0,
+  "preview_tabs": {
+    "enabled": true
+  },
+  "tab_bar": {
+    "show_tab_bar_buttons": true,
+    "show_nav_history_buttons": false,
+    "show": true
+  },
+  "debugger": {
+    "button": false
+  },
+  "search": {
+    "button": true
+  },
+  "diagnostics": {
+    "button": false
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "git_panel": {
+    "button": false
+  },
+  "proxy": "",
+  "agent": {
+    "flexible": false,
+    "button": false,
+    "favorite_models": [],
+    "model_parameters": [],
+    "enable_feedback": false
+  },
+  "disable_ai": true,
+  "completions": {
+    "lsp": false
+  },
+  "terminal": {
+    "button": false,
+    "font_family": ".SystemUIFont"
+  },
+  "title_bar": {
+    "show_user_picture": false,
+    "show_sign_in": false,
+    "show_project_items": true,
+    "show_user_menu": false,
+    "show_onboarding_banner": false,
+    "show_branch_name": true
+  },
+  "status_bar": {
+    "cursor_position_button": false,
+    "active_language_button": true
+  },
+  "project_panel": {
+    "git_status": true,
+    "dock": "left",
+    "button": true
+  },
+  "cli_default_open_behavior": "existing_window",
+  "icon_theme": "Zed (Default)",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "show_wrap_guides": true,
+  "wrap_guides": [80, 120],
+  "ui_font_size": 16.0,
+  "buffer_font_size": 14.0,
+  "theme": "One Dark",
+  "lsp": {
+    "basedpyright": {
+      "settings": {
+        "basedpyright.analysis.typeCheckingMode": "standard",
+        "basedpyright.analysis.diagnosticSeverityOverrides": {
+          "reportImplicitStringConcatenation": "none"
+        }
+      }
+    }
+  }
+}
