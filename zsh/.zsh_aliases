@@ -43,6 +43,11 @@ else
   alias ob="obsidian"
 fi
 
+# zed (Arch package installs the binary as `zeditor`; macOS CLI is already `zed`)
+if [[ "$OSTYPE" != darwin* ]]; then
+  alias zed="zeditor"
+fi
+
 # hyprland
 alias hp="start-hyprland"
 
