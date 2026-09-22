@@ -14,6 +14,7 @@ Personal configuration files, managed as [GNU Stow](https://www.gnu.org/software
 | `git` | Git config | both |
 | `glow` | Markdown viewer theme | both |
 | `vscode` | Editor settings and extensions list | both |
+| `zed` | Editor settings | both |
 | `hypr` | Hyprland window manager | Linux |
 | `waybar` | Status bar | Linux |
 | `conky` | Desktop system monitor | Linux |

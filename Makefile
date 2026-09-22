@@ -2,7 +2,7 @@ OS := $(shell uname -s)
 STOW := stow -t $(HOME) -R -d $(CURDIR)
 
 # Packages stowed on every platform
-COMMON := zsh vim nvim tmux kitty git
+COMMON := zsh vim nvim tmux kitty git zed
 
 .PHONY: all common linux $(COMMON) glow vscode hypr waybar conky harness
 
