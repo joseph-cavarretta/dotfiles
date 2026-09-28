@@ -54,5 +54,9 @@ alias hp="start-hyprland"
 # thurnar files-viewer
 alias files="thunar"
 
+# Proton VPN
+alias vpn="protonvpn connect --country US"
+alias vpnoff="protonvpn disconnect"
+
 # system update
 alias sysup="yay -Syu"

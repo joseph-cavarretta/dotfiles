@@ -4,7 +4,7 @@ STOW := stow -t $(HOME) -R -d $(CURDIR)
 # Packages stowed on every platform
 COMMON := zsh vim nvim tmux kitty git zed
 
-.PHONY: all common linux $(COMMON) glow vscode hypr waybar conky harness
+.PHONY: all common linux $(COMMON) glow vscode hypr waybar conky proton harness
 
 all: common glow vscode harness
 ifeq ($(OS),Linux)
@@ -17,9 +17,9 @@ $(COMMON):
 	$(STOW) $@
 
 # Linux-only desktop packages
-linux: hypr waybar conky
+linux: hypr waybar conky proton
 
-hypr waybar conky:
+hypr waybar conky proton:
 	$(STOW) $@
 
 # glow: XDG (~/.config/glow) on both; macOS glow also reads ~/Library/Preferences/glow,
