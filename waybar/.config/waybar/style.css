@@ -88,6 +88,12 @@ window#waybar {
   border-color: rgba(152, 195, 121, 0.6);
 }
 
+/* Proton VPN tunnel; inherits the #network pill */
+#network.vpn {
+  color: #e5c07b;                                    /* yellow */
+  border-color: rgba(229, 192, 123, 0.6);
+}
+
 #clock {
   color: #e5cfff;                                    /* soft sakura-ish */
   border-color: rgba(224, 108, 117, 0.7);

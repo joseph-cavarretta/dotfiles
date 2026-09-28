@@ -5,7 +5,14 @@
 
   "modules-left": ["hyprland/workspaces"],
   "modules-center": [],
-  "modules-right": ["cpu", "memory", "network", "clock"],
+  "modules-right": ["network#vpn", "cpu", "memory", "network", "clock"],
+
+  "network#vpn": {
+    "interface": "proton0",
+    "format": "VPN",
+    "format-disconnected": "",
+    "tooltip-format": "{ifname} {ipaddr}"
+  },
 
   "hyprland/workspaces": {
     "all-outputs": true,
