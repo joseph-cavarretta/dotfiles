@@ -22,6 +22,11 @@ alias l="ls -CF"
 # python aliases
 alias pip-clear="pip freeze | xargs pip uninstall -y"
 
+# kubernetes
+alias kga="kubectl get applications -A"
+alias kgp="kubectl get pods -A"
+alias kl="kubectl logs"
+
 # misc aliases
 alias cl="clear"
 alias ps="ps aux"
