@@ -22,7 +22,10 @@ alias l="ls -CF"
 # python aliases
 alias pip-clear="pip freeze | xargs pip uninstall -y"
 
-# kubernetes
+# kubernetes (kubecolor wraps kubectl to colorize its output)
+if command -v kubecolor >/dev/null 2>&1; then
+  alias kubectl="kubecolor"
+fi
 alias kga="kubectl get applications -A"
 alias kgp="kubectl get pods -A"
 alias kl="kubectl logs"

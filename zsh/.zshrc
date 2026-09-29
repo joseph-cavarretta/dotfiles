@@ -85,6 +85,9 @@ unset _zcompdump
 # make completion: prioritize targets
 zstyle ':completion:*:*:make:*' tag-order 'targets'
 
+# kubecolor: reuse kubectl's completion
+compdef kubecolor=kubectl
+
 
 # ------------------------------------------------------------
 # PROMPT
