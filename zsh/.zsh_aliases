@@ -30,6 +30,11 @@ alias kga="kubectl get applications -A"
 alias kgp="kubectl get pods -A"
 alias kl="kubectl logs"
 
+# cat with syntax highlighting (theme set by BAT_THEME in .zshenv)
+if command -v bat >/dev/null 2>&1; then
+  alias cat="bat --paging=never --style=plain"
+fi
+
 # misc aliases
 alias cl="clear"
 alias ps="ps aux"
