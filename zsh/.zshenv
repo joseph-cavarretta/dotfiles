@@ -6,3 +6,6 @@ export SAVEHIST=10000   # max events in history file
 
 # glow / glamour markdown theme (resolved by absolute path on both macOS and Linux)
 export GLAMOUR_STYLE="$HOME/.config/glow/atom-one-dark.json"
+
+# bat syntax theme (closest built-in to Atom One Dark)
+export BAT_THEME="OneHalfDark"
