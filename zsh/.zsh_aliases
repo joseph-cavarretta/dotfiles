@@ -29,6 +29,7 @@ fi
 alias kga="kubectl get applications -A"
 alias kgp="kubectl get pods -A"
 alias kl="kubectl logs"
+alias k="kubectl"
 
 # cat with syntax highlighting (theme set by BAT_THEME in .zshenv)
 if command -v bat >/dev/null 2>&1; then
