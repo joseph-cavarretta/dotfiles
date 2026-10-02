@@ -2,6 +2,15 @@
 
 Personal configuration files, managed as [GNU Stow](https://www.gnu.org/software/stow/) packages and symlinked into `$HOME`. Cross-platform: macOS and Arch Linux.
 
+## Screenshots
+
+Hyprland with Waybar on Arch Linux.
+
+![Desktop](assets/hyprland-desktop.png)
+![Editor split](assets/hyprland-editor-split.png)
+![Terminal and editor](assets/hyprland-terminal-editor.png)
+![Obsidian graph](assets/hyprland-obsidian-graph.png)
+
 ## What's Included
 
 | Package | Configures | Platform |
