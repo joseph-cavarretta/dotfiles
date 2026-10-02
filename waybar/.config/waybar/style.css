@@ -54,6 +54,7 @@ window#waybar {
 #cpu,
 #memory,
 #network,
+#custom-vpn,
 #clock {
   /* inner padding inside the pill */
   padding: 4px 10px 4px;
@@ -88,8 +89,8 @@ window#waybar {
   border-color: rgba(152, 195, 121, 0.6);
 }
 
-/* Proton VPN tunnel; inherits the #network pill */
-#network.vpn {
+/* Proton VPN tunnel; hidden when proton0 is down */
+#custom-vpn {
   color: #e5c07b;                                    /* yellow */
   border-color: rgba(229, 192, 123, 0.6);
 }
@@ -104,6 +105,7 @@ window#waybar {
 #cpu:hover,
 #memory:hover,
 #network:hover,
+#custom-vpn:hover,
 #clock:hover {
   background: #2f343f;
   box-shadow: 0 0 10px rgba(97, 175, 239, 0.35);
