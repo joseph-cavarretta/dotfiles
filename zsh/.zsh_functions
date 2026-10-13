@@ -105,3 +105,38 @@ else
   bt_off()    { bt_on; }
   bt_status() { bt_on; }
 fi
+
+
+# ------------------------------------------------------------
+# NETWORK (arch-mini): internet over WindRidgeWifi or homelab ethernet
+# enp2s0 never goes down either way: k3s reaches the Pi nodes over it.
+
+if [[ "$OSTYPE" == linux* ]] && command -v nmcli >/dev/null 2>&1; then
+  NET_WIRED_CONN="Wired connection 1"
+  NET_WIFI_CONN="WindRidgeWifi"
+
+  net_wifi() {
+    echo "Routing internet over $NET_WIFI_CONN..."
+    nmcli radio wifi on
+    nmcli connection modify "$NET_WIFI_CONN" connection.autoconnect yes
+    nmcli connection modify "$NET_WIRED_CONN" ipv4.never-default yes ipv6.never-default yes
+    nmcli device reapply enp2s0
+    sleep 2
+    nmcli connection up "$NET_WIFI_CONN" && net_status
+  }
+
+  net_homelab() {
+    echo "Routing internet over homelab ethernet (enp2s0)..."
+    nmcli connection modify "$NET_WIRED_CONN" ipv4.never-default no ipv6.never-default no
+    nmcli device reapply enp2s0
+    nmcli connection modify "$NET_WIFI_CONN" connection.autoconnect no
+    nmcli connection down "$NET_WIFI_CONN" 2>/dev/null
+    nmcli radio wifi off
+    net_status
+  }
+
+  net_status() {
+    ip route show default
+    ping -c1 -W2 1.1.1.1 >/dev/null 2>&1 && echo "internet: ok" || echo "internet: DOWN"
+  }
+fi
