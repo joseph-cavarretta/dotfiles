@@ -32,6 +32,10 @@ let g:tagbar_width = 80
 " ------------------------------------------------------------
 " EDITOR OPTIONS
 
+" indent with 4 spaces by default; filetype plugins override this
+" (Go and Makefiles keep hard tabs, which now display 4 wide)
+set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+
 " show line numbers
 set number
 
