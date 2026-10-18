@@ -91,6 +91,8 @@ return {
       },
     })
 
+    vim.api.nvim_create_user_command("NT", "Neotree toggle filesystem", {})
+
     -- keymaps
     vim.keymap.set("n", "<leader>e", ":Neotree toggle filesystem<CR>", { desc = "Toggle Neo-tree" })
     vim.keymap.set("n", "<leader>o", ":Neotree focus filesystem<CR>", { desc = "Focus Neo-tree" })
