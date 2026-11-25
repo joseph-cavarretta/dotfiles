@@ -66,6 +66,9 @@ Configs assume these tools are present (install per platform):
 - **macOS bluetooth helpers** (`bt_on`/`bt_off`/`bt_status`) — `brew install blueutil`.
 - **VSCode extensions** — restore with
   `xargs -n1 code --install-extension < vscode/vscode-extensions.txt`.
-- **Arch desktop** (Hyprland) — `mpvpaper` plus a video wallpaper at
-  `~/.wallpaper/…mp4` and the launcher `~/.local/bin/mpvpaper-loop.sh` (both machine-local,
-  not tracked here).
+- **Arch desktop** (Hyprland) — `mpvpaper` plus a video wallpaper at `~/.wallpaper/…mp4`
+  (machine-local, not tracked here). The launcher is tracked at
+  `hypr/.config/hypr/scripts/mpvpaper-loop.sh`.
+- **Lock screen** (`Super+L`) — `hyprlock`, plus a still frame of the wallpaper at
+  `~/.wallpaper/cherry-blossom-lock.png` (machine-local; `ffmpeg` command in
+  `hypr/.config/hypr/hyprlock.conf`).
